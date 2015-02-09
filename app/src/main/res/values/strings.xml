@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">OvingtonGolf</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="manageCourses">Maange Courses</string>
+    <string name="title_activity_manage_courses">manageCourses</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="drawer_open">Drawer Open</string>
+    <string name="drawer_close">Drawer Close</string>
+    <string name="lblCourseName">Course name</string>
+    <string name="lblAddressLine1">Address line 1</string>
+    <string name="lblAddressLine2">Address line 2</string>
+    <string name="lblCoursePhone">Phone number</string>
+
+</resources>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <EditText
+        android:id="@+id/PageTitle"
+        android:layout_height="wrap_content"
+        android:hint="Course Details"
+        android:inputType="text"
+        android:layout_width="fill_parent">
+    </EditText>
+
+
+    <EditText
+        android:id="@+id/EditTextName"
+        android:layout_height="wrap_content"
+        android:hint="@string/lblCourseName"
+        android:inputType="text"
+        android:layout_width="fill_parent">
+    </EditText>
+
+    <EditText
+        android:id="@+id/EditAddress1"
+        android:layout_height="wrap_content"
+        android:hint="@string/lblAddressLine1"
+        android:inputType="text"
+        android:layout_width="fill_parent">
+    </EditText>
+
+    <EditText
+        android:id="@+id/EditAddress2"
+        android:layout_height="wrap_content"
+        android:hint="@string/lblAddressLine2"
+        android:inputType="text"
+        android:layout_width="fill_parent">
+    </EditText>
+
+    <EditText
+        android:id="@+id/EditPhone"
+        android:layout_height="wrap_content"
+        android:hint="@string/lblCoursePhone"
+        android:inputType="text"
+        android:layout_width="fill_parent">
+    </EditText>
+
+    <Button
+        android:id="@+id/SaveCourse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="save"
+        android:gravity="left|bottom"/>
+</LinearLayout>

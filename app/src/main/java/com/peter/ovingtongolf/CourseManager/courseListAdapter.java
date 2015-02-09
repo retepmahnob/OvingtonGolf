@@ -28,7 +28,7 @@ public class courseListAdapter extends RecyclerView.Adapter<courseListAdapter.co
     private Cursor mCursor;
     public courseListAdapter(Context context, Callbacks c) {
 
-        mCallbacks = (Callbacks) c;
+        mCallbacks = c;
         inflater= LayoutInflater.from(context);
     }
 

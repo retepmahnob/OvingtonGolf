@@ -5,7 +5,6 @@ import android.app.LoaderManager;
 import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,7 +23,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link frag_list_courses.OnFragmentInteractionListener} interface
+ * {@link com.peter.ovingtongolf.CourseManager.frag_list_courses.OnCourseSelectedListener} interface
  * to handle interaction events.
  * Use the {@link frag_list_courses#newInstance} factory method to
  * create an instance of this fragment.
@@ -44,7 +43,7 @@ public class frag_list_courses extends Fragment implements LoaderManager.LoaderC
     private String mParam1;
     private String mParam2;
 
-    private OnFragmentInteractionListener mListener;
+    private OnCourseSelectedListener mListener;
 
     /**
      * Use this factory method to create a new instance of
@@ -93,14 +92,14 @@ public class frag_list_courses extends Fragment implements LoaderManager.LoaderC
         return layout;
     }
 
-    public static List<courseListItem> getData(){
+    public static List<courseListAdapter.courseListItem> getData(){
 
-        List<courseListItem> data = new ArrayList<>();
+        List<courseListAdapter.courseListItem> data = new ArrayList<>();
 
         String[] titles = {"one potato", "two potato", "three potato", "four", "one potato", "two potato", "three potato", "four", "one potato", "two potato", "three potato", "four"};
 
         for (int i=0 ; i<100 ; i++){
-            courseListItem c = new courseListItem();
+            courseListAdapter.courseListItem c = new courseListAdapter.courseListItem();
             c.courseName = titles[i%titles.length];
             c.iconId = R.drawable.ic_launcher;
             data.add(c);
@@ -108,18 +107,11 @@ public class frag_list_courses extends Fragment implements LoaderManager.LoaderC
         return data;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            mListener = (OnFragmentInteractionListener) activity;
+            mListener = (OnCourseSelectedListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -158,7 +150,12 @@ public class frag_list_courses extends Fragment implements LoaderManager.LoaderC
     }
 
     @Override
-    public void onItemSelected(String id) {
+    public void onCourseSelected(String id) {
+
+        Log.d("Golf", "Fragment Selected course Guid:" + id);
+        if (mListener != null) {
+            mListener.onCourseSelected(id);
+        }
 
     }
 
@@ -172,9 +169,9 @@ public class frag_list_courses extends Fragment implements LoaderManager.LoaderC
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
-    public interface OnFragmentInteractionListener {
+    public interface OnCourseSelectedListener {
         // TODO: Update argument type and name
-        public void onFragmentInteraction(Uri uri);
+        public void onCourseSelected(String id);
     }
 
 }

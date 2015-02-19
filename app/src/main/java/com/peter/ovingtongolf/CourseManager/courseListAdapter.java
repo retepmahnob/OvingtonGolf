@@ -9,19 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.peter.ovingtongolf.CursorRecyclerAdapter;
 import com.peter.ovingtongolf.R;
 
-import java.util.Collections;
-import java.util.List;
 
 /**
  * Created by peter on 2/02/15.
  */
 public class courseListAdapter extends RecyclerView.Adapter<courseListAdapter.courseViewHolder> {
-//        CursorRecyclerAdapter <courseListAdapter.courseViewHolder> {
-//          RecyclerView.Adapter<courseListAdapter.courseViewHolder> {
 
     private LayoutInflater inflater;
     private Callbacks mCallbacks;
@@ -34,7 +28,7 @@ public class courseListAdapter extends RecyclerView.Adapter<courseListAdapter.co
 
     public interface Callbacks {
 
-        public void onItemSelected(String id);
+        public void onCourseSelected(String id);
     }
 
     public void swapCursor (Cursor cursor){
@@ -57,9 +51,7 @@ public class courseListAdapter extends RecyclerView.Adapter<courseListAdapter.co
         if (mCursor != null) {
             if (mCursor.moveToPosition(position)){
 
-
                 courseListItem course = new courseListItem();
-
                 Log.d("Golf", "onB indViewHolder" + position);
                 holder.title.setText(mCursor.getString(1));
                 holder.icon.setImageResource(course.iconId);
@@ -84,14 +76,25 @@ public class courseListAdapter extends RecyclerView.Adapter<courseListAdapter.co
 
             title= (TextView) itemView.findViewById(R.id.course_name);
             icon = (ImageView) itemView.findViewById(R.id.course_image);
-            icon.setOnClickListener(this);
+//            icon.setOnClickListener(this);
+            itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-            mCallbacks.onItemSelected("1");
+
+            mCursor.moveToPosition(getPosition());
+            String sGuid = mCursor.getString(1);
+
+            mCallbacks.onCourseSelected(sGuid);
         }
     }
 
+    public static class courseListItem {
+        int iconId;
+
+        String courseName;
+
+    }
 
 }

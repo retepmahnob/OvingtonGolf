@@ -50,8 +50,7 @@ import android.widget.Filterable;
  * @see android.widget.Filterable
  */
 
-public abstract class CursorRecyclerAdapter<VH
-        extends android.support.v7.widget.RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH>
+public abstract class CursorRecyclerAdapter<VH extends android.support.v7.widget.RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH>
         implements Filterable, CursorFilter.CursorFilterClient {
 
     private boolean mDataValid;

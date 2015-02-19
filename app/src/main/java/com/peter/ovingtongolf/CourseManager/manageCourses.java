@@ -1,18 +1,17 @@
 package com.peter.ovingtongolf.CourseManager;
 
-import android.net.Uri;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.peter.ovingtongolf.R;
 
 
-public class manageCourses extends ActionBarActivity implements frag_list_courses.OnFragmentInteractionListener {
+public class manageCourses extends ActionBarActivity implements frag_list_courses.OnCourseSelectedListener {
 
     private boolean mEditActive;
 
@@ -28,7 +27,8 @@ public class manageCourses extends ActionBarActivity implements frag_list_course
 
         if (findViewById(R.id.editcourse_detail_container) != null){
             mEditActive = true;
-            frag_edit_course_details fragment = new frag_edit_course_details();
+//            frag_edit_course_details fragment = new frag_edit_course_details();
+            frag_edit_course fragment = new frag_edit_course();
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.editcourse_detail_container, fragment)
@@ -67,7 +67,7 @@ public class manageCourses extends ActionBarActivity implements frag_list_course
     }
 
     @Override
-    public void onFragmentInteraction(Uri uri) {
-
+    public void onCourseSelected(String id) {
+        Log.d("Golf", "Activity Selected course Guid:" + id);
     }
 }

@@ -24,6 +24,12 @@ public class golfContentProvider extends ContentProvider {
     private static final int PLAYERS = 200;
     private static final int PLAYERS_ID = 201;
 
+    private static final int TEES = 300;
+    private static final int TEES_ID = 301;
+
+    private static final int HOLES = 400;
+    private static final int HOLES_ID = 401;
+
     private static UriMatcher buildUriMatcher() {
 
         final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
@@ -34,6 +40,12 @@ public class golfContentProvider extends ContentProvider {
 
         matcher.addURI(authority, "player", PLAYERS);
         matcher.addURI(authority, "player/*", PLAYERS_ID);
+
+        matcher.addURI(authority, "tees", TEES);
+        matcher.addURI(authority, "tees/*", TEES_ID);
+
+        matcher.addURI(authority, "holes", PLAYERS);
+        matcher.addURI(authority, "holes/*", PLAYERS_ID);
         return matcher;
     }
 
@@ -59,6 +71,10 @@ public class golfContentProvider extends ContentProvider {
                 return sqlcontractGolf.Course.CONTENT_TYPE;
             case PLAYERS:
                 return sqlcontractGolf.Player.CONTENT_TYPE;
+            case TEES:
+                return sqlcontractGolf.Tees.CONTENT_TYPE;
+            case HOLES:
+                return sqlcontractGolf.Holes.CONTENT_TYPE;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
@@ -98,6 +114,22 @@ public class golfContentProvider extends ContentProvider {
                 final String playerId = sqlcontractGolf.Player.getId(uri);
                 return builder.table(GolfDatabase.Tables.PLAYERS)
                         .where(sqlcontractGolf.Player.PLAYER_ID + "=?", playerId);
+            }
+            case TEES: {
+                return builder.table(GolfDatabase.Tables.TEES);
+            }
+            case TEES_ID: {
+                final String teeId = sqlcontractGolf.Tees.getId(uri);
+                return builder.table(GolfDatabase.Tables.TEES)
+                        .where(sqlcontractGolf.Tees._ID + "=?", teeId);
+            }
+            case HOLES: {
+                return builder.table(GolfDatabase.Tables.TEES);
+            }
+            case HOLES_ID: {
+                final String holeId = sqlcontractGolf.Tees.getId(uri);
+                return builder.table(GolfDatabase.Tables.HOLES)
+                        .where(sqlcontractGolf.Holes.HOLE_ID + "=?", holeId);
             }
             default: {
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
@@ -145,6 +177,14 @@ public class golfContentProvider extends ContentProvider {
             case PLAYERS: {
                 db.insertOrThrow(GolfDatabase.Tables.PLAYERS, null, values);
                 return sqlcontractGolf.Player.buildUri(values.getAsString(sqlcontractGolf.Player.PLAYER_ID));
+            }
+            case TEES: {
+                db.insertOrThrow(GolfDatabase.Tables.TEES, null, values);
+                return sqlcontractGolf.Tees.buildUri(values.getAsString(sqlcontractGolf.Tees._ID));
+            }
+            case HOLES: {
+                db.insertOrThrow(GolfDatabase.Tables.HOLES, null, values);
+                return sqlcontractGolf.Tees.buildUri(values.getAsString(sqlcontractGolf.Holes.HOLE_ID));
             }
             default: {
                 throw new UnsupportedOperationException("Unknown insert uri: " + uri);
@@ -200,6 +240,22 @@ public class golfContentProvider extends ContentProvider {
                 final String playerId = sqlcontractGolf.Player.getId(uri);
                 return builder.table(GolfDatabase.Tables.PLAYERS)
                         .where(sqlcontractGolf.Player.PLAYER_ID + "=?", playerId);
+            }
+            case TEES: {
+                return builder.table(GolfDatabase.Tables.TEES);
+            }
+            case TEES_ID: {
+                final String teeId = sqlcontractGolf.Tees.getId(uri);
+                return builder.table(GolfDatabase.Tables.TEES)
+                        .where(sqlcontractGolf.Tees._ID + "=?", teeId);
+            }
+            case HOLES: {
+                return builder.table(GolfDatabase.Tables.HOLES);
+            }
+            case HOLES_ID: {
+                final String teeId = sqlcontractGolf.Holes.getId(uri);
+                return builder.table(GolfDatabase.Tables.HOLES)
+                        .where(sqlcontractGolf.Holes.HOLE_ID + "=?", teeId);
             }
             default: {
                 throw new UnsupportedOperationException("Unknown uri for " + match + ": " + uri);

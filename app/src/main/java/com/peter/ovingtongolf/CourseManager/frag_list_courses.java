@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.peter.ovingtongolf.Data.CourseItem;
 import com.peter.ovingtongolf.R;
 import com.peter.ovingtongolf.databaseProvider.sqlcontractGolf;
 
@@ -36,30 +37,11 @@ public class frag_list_courses extends Fragment implements LoaderManager.LoaderC
     private static final String[] PROJECTION = new String[] { "name", "name" };
     private static final int URL_LOADER = 0;
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     private OnCourseSelectedListener mListener;
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment frag_list_courses.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static frag_list_courses newInstance(String param1, String param2) {
+    public static frag_list_courses newInstance(CourseItem courseItem) {
         frag_list_courses fragment = new frag_list_courses();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
         return fragment;
     }
 
@@ -71,8 +53,10 @@ public class frag_list_courses extends Fragment implements LoaderManager.LoaderC
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
+/*
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
+*/
         }
     }
 
@@ -90,21 +74,6 @@ public class frag_list_courses extends Fragment implements LoaderManager.LoaderC
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         return layout;
-    }
-
-    public static List<courseListAdapter.courseListItem> getData(){
-
-        List<courseListAdapter.courseListItem> data = new ArrayList<>();
-
-        String[] titles = {"one potato", "two potato", "three potato", "four", "one potato", "two potato", "three potato", "four", "one potato", "two potato", "three potato", "four"};
-
-        for (int i=0 ; i<100 ; i++){
-            courseListAdapter.courseListItem c = new courseListAdapter.courseListItem();
-            c.courseName = titles[i%titles.length];
-            c.iconId = R.drawable.ic_launcher;
-            data.add(c);
-        }
-        return data;
     }
 
     @Override
@@ -137,7 +106,7 @@ public class frag_list_courses extends Fragment implements LoaderManager.LoaderC
         if (data != null) {
             if (data.moveToFirst()) {
                 do {
-                    Log.d("Golf", data.getString(0) + "->"+data.getString(1) + "->"+data.getString(2));
+                    Log.d("Golf Courses", data.getString(0) + "->"+data.getString(1) + "->"+data.getString(2));
                 } while (data.moveToNext());
             }
         }
@@ -153,6 +122,7 @@ public class frag_list_courses extends Fragment implements LoaderManager.LoaderC
     public void onCourseSelected(String id) {
 
         Log.d("Golf", "Fragment Selected course Guid:" + id);
+
         if (mListener != null) {
             mListener.onCourseSelected(id);
         }

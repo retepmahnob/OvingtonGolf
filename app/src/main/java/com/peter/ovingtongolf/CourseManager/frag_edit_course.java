@@ -10,12 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.peter.ovingtongolf.Data.CourseItem;
 import com.peter.ovingtongolf.R;
+import com.peter.ovingtongolf.databaseProvider.sqlcontractGolf;
 import com.peter.ovingtongolf.utilities.SlidingTabLayout;
-
-import it.neokree.materialtabs.MaterialTab;
-import it.neokree.materialtabs.MaterialTabHost;
-import it.neokree.materialtabs.MaterialTabListener;
 
 
 /**
@@ -26,12 +24,34 @@ public class frag_edit_course extends Fragment {
     private ViewPager viewPager;
     private SlidingTabLayout tabHost;
 
+    private frag_edit_course_details courseDetails;
+    private frag_edit_course_location courseLocation;
+    private frag_list_course_holes courseHoles;
+    private CourseItem currentCourse;
+
+    private CoursePagerAdapter adapter;
+
+    public void setCurrentCourse (CourseItem currentCourse){
+        this.currentCourse = currentCourse;
+
+        if (courseDetails!=null){
+            courseDetails.setCurrentCourse(currentCourse);
+        }
+
+        adapter.pageCount = 5;
+        adapter.notifyDataSetChanged();
+        tabHost.setViewPager(viewPager);
+    }
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstance) {
 
         View view = inflater.inflate(R.layout.frag_edit_course, container, false);
-        CoursePagerAdapter adapter = new CoursePagerAdapter(getActivity().getSupportFragmentManager());
+        adapter = new CoursePagerAdapter(getActivity().getSupportFragmentManager());
+
         viewPager = (ViewPager) view.findViewById(R.id.viewPagerEditCourse);
+
         tabHost = (SlidingTabLayout) view.findViewById(R.id.tabHostEditCourse);
 
         viewPager.setAdapter(adapter);
@@ -40,10 +60,11 @@ public class frag_edit_course extends Fragment {
         return view;
     }
 
-    private class CoursePagerAdapter extends FragmentPagerAdapter {
+    private class CoursePagerAdapter extends FragmentStatePagerAdapter {
 
-        private String[] TabTiles = {"Details", "Location", "Holes", "History"};
+        private String[] TabTiles = {"Details", "Location", "Holes", "History", "Another 1", "Another 2", "Another 3", "Another 4"};
 
+        public int pageCount = 3;
         public CoursePagerAdapter(FragmentManager fm) {
             super(fm);
         }
@@ -53,11 +74,14 @@ public class frag_edit_course extends Fragment {
 
             switch (position){
                 case 0:
-                    return new frag_edit_course_details();
+                    courseDetails = frag_edit_course_details.newInstance(currentCourse);
+                    return courseDetails;
                 case 1:
-                    return frag_edit_course_location.newInstance();
+                    courseLocation = frag_edit_course_location.newInstance(currentCourse);
+                    return courseLocation;
                 case 2:
-                    return new frag_edit_course_details();
+                    courseHoles = new frag_list_course_holes();
+                    return courseHoles;
                 default:
                     return new frag_edit_course_details();
             }
@@ -65,7 +89,7 @@ public class frag_edit_course extends Fragment {
 
         @Override
         public int getCount() {
-            return 4;
+            return pageCount;
         }
 
         @Override

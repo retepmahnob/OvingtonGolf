@@ -9,54 +9,45 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.peter.ovingtongolf.R;
 
-
 /**
- * Created by peter on 2/02/15.
+ * Created by peter on 23/02/15.
  */
-public class courseListAdapter extends RecyclerView.Adapter<courseListAdapter.courseViewHolder> {
+public class hole_list_adapter  extends RecyclerView.Adapter<hole_list_adapter.holeViewHolder> {
 
     private LayoutInflater inflater;
     private Callbacks mCallbacks;
     private Cursor mCursor;
-    public courseListAdapter(Context context, Callbacks c) {
+
+    public hole_list_adapter(Context context, Callbacks c) {
 
         mCallbacks = c;
         inflater= LayoutInflater.from(context);
     }
 
-    public interface Callbacks {
-
-        public void onCourseSelected(String id);
-    }
-
-    public void swapCursor (Cursor cursor){
-
-        mCursor = cursor;
-        notifyItemRangeChanged(0, mCursor.getCount());
-    }
-
     @Override
-    public courseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public holeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.course_row, parent, false);
-        courseViewHolder holder=new courseViewHolder(view);
-        Log.d("Golf", "onCreateViewHolder");
+        holeViewHolder holder=new holeViewHolder(view);
+        Log.d("Golf", "holeViewHolder");
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(courseViewHolder holder, int position) {
+    public void onBindViewHolder(holeViewHolder holder, int position) {
 
         if (mCursor != null) {
             if (mCursor.moveToPosition(position)){
 
-                courseListItem course = new courseListItem();
+                holeListItem course = new holeListItem();
                 Log.d("Golf", "onB indViewHolder" + position);
                 holder.title.setText(mCursor.getString(1));
                 holder.icon.setImageResource(course.iconId);
             }
         }
+
     }
 
     @Override
@@ -66,14 +57,24 @@ public class courseListAdapter extends RecyclerView.Adapter<courseListAdapter.co
         return 0;
     }
 
-    class courseViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public interface Callbacks {
+
+        public void onHoleSelected(String id);
+    }
+
+    public void swapCursor (Cursor cursor){
+
+        mCursor = cursor;
+        notifyItemRangeChanged(0, mCursor.getCount());
+    }
+
+    class holeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView title;
         ImageView icon;
 
-        public courseViewHolder(View itemView) {
+        public holeViewHolder(View itemView) {
             super(itemView);
-
             title= (TextView) itemView.findViewById(R.id.course_name);
             icon = (ImageView) itemView.findViewById(R.id.course_image);
 //            icon.setOnClickListener(this);
@@ -84,13 +85,14 @@ public class courseListAdapter extends RecyclerView.Adapter<courseListAdapter.co
         public void onClick(View v) {
 
             mCursor.moveToPosition(getPosition());
-            String colId = mCursor.getString(0);
+            String sGuid = mCursor.getString(1);
 
-            mCallbacks.onCourseSelected(colId);
+            mCallbacks.onHoleSelected(sGuid);
+
         }
     }
 
-    public static class courseListItem {
+    public static class holeListItem {
         int iconId;
 
         String courseName;

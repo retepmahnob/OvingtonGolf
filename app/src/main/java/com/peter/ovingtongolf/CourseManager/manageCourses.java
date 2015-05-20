@@ -1,5 +1,6 @@
 package com.peter.ovingtongolf.CourseManager;
 
+import android.database.Cursor;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -8,13 +9,18 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.peter.ovingtongolf.Data.CourseItem;
 import com.peter.ovingtongolf.R;
+import com.peter.ovingtongolf.databaseProvider.GolfDatabase;
+import com.peter.ovingtongolf.databaseProvider.golfContentProvider;
+import com.peter.ovingtongolf.databaseProvider.sqlcontractGolf;
 
 
-public class manageCourses extends ActionBarActivity implements frag_list_courses.OnCourseSelectedListener {
+public class manageCourses extends ActionBarActivity implements frag_list_courses.OnCourseSelectedListener, frag_list_course_holes.OnHoleSelectedListener {
 
     private boolean mEditActive;
-
+    String mCurrentCourse;
+    private frag_edit_course courseFragment = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,11 +33,10 @@ public class manageCourses extends ActionBarActivity implements frag_list_course
 
         if (findViewById(R.id.editcourse_detail_container) != null){
             mEditActive = true;
-//            frag_edit_course_details fragment = new frag_edit_course_details();
-            frag_edit_course fragment = new frag_edit_course();
+            courseFragment = new frag_edit_course();
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.editcourse_detail_container, fragment)
+                    .replace(R.id.editcourse_detail_container, courseFragment)
                     .commit();
 
         }
@@ -68,6 +73,25 @@ public class manageCourses extends ActionBarActivity implements frag_list_course
 
     @Override
     public void onCourseSelected(String id) {
-        Log.d("Golf", "Activity Selected course Guid:" + id);
+
+        mCurrentCourse = id;
+        Cursor c = getContentResolver().query(sqlcontractGolf.Course.buildUri(),
+                null,
+                sqlcontractGolf.Course._ID+"=?",
+                new String[]{id},
+                null);
+
+        if (c.moveToFirst()) {
+            CourseItem Course = new CourseItem();
+            Course.fromCursor(c);
+            courseFragment.setCurrentCourse (Course);
+        }
+
+        c.close();
+    }
+
+    @Override
+    public void onHoleSelected(String id) {
+
     }
 }

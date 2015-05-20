@@ -14,5 +14,6 @@
     <string name="lblAddressLine1">Address line 1</string>
     <string name="lblAddressLine2">Address line 2</string>
     <string name="lblCoursePhone">Phone number</string>
+    <string name="lblCourseEMail">Course Email</string>
 
 </resources>

@@ -4,4 +4,10 @@
         <attr name="field" format="string"/>
         <attr name="table" format="string"/>
     </declare-styleable>
+
+    <declare-styleable name="sqlApplyButton">
+        <attr name="cb_color" format="color" />
+        <attr name="cb_pressedRingWidth" format="dimension" />
+    </declare-styleable>
+
 </resources>

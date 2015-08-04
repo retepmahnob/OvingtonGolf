@@ -1,64 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:sqledit="http://schemas.android.com/apk/res-auto"
+              xmlns:sqledit="http://schemas.android.com/tools"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical"
+              android:id="@+id/sqlLayout"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
-    <EditText
-        android:id="@+id/PageTitle"
-        android:layout_height="wrap_content"
-        android:hint="Course Details"
-        android:inputType="text"
-        android:layout_width="fill_parent">
-    </EditText>
 
 
-    <EditText
+    <com.peter.ovingtongolf.utilities.sqlEditText
         android:id="@+id/EditName"
         android:layout_height="wrap_content"
         android:hint="@string/lblCourseName"
         android:inputType="text"
-        android:layout_width="fill_parent">
-    </EditText>
+        android:layout_width="fill_parent"
+        sqledit:table="courses"
+        sqledit:field="course_name"
+    />
 
-    <EditText
+
+    <com.peter.ovingtongolf.utilities.sqlEditText
         android:id="@+id/EditAddress1"
         android:layout_height="wrap_content"
         android:hint="@string/lblAddressLine1"
         android:inputType="text"
-        android:layout_width="fill_parent">
-    </EditText>
+        android:layout_width="fill_parent"
+        sqledit:table="courses"
+        sqledit:field="course_addr1"
+    />
 
-    <EditText
+    <com.peter.ovingtongolf.utilities.sqlEditText
         android:id="@+id/EditAddress2"
         android:layout_height="wrap_content"
         android:hint="@string/lblAddressLine2"
-        android:inputType="text"
-        android:layout_width="fill_parent">
-    </EditText>
+        android:inputType="textPostalAddress"
+        android:layout_width="fill_parent"
+        sqledit:table="courses"
+        sqledit:field="course_addr2"
+    />
 
-    <EditText
+    <com.peter.ovingtongolf.utilities.sqlEditText
         android:id="@+id/EditPhone"
         android:layout_height="wrap_content"
         android:hint="@string/lblCoursePhone"
-        android:inputType="text"
-        android:layout_width="fill_parent">
-    </EditText>
+        android:inputType="phone"
+        android:layout_width="fill_parent"
+        sqledit:table="courses"
+        sqledit:field="course_phone"
+    />
 
     <com.peter.ovingtongolf.utilities.sqlEditText
         android:id="@+id/EditEMail"
         android:layout_height="wrap_content"
         android:hint="@string/lblCourseEMail"
-        android:inputType="text"
+        android:inputType="textEmailAddress"
         android:layout_width="fill_parent"
         sqledit:table="courses"
-        sqledit:field="email"
+        sqledit:field="course_email"
     />
+    <RelativeLayout android:orientation="horizontal"
+                  android:layout_width="match_parent"
+                  android:background="@color/accentColor"
+                  android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/SaveCourse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/primaryColor"
+            android:text="save"
+            android:gravity="right|bottom"/>
 
-    <Button
-        android:id="@+id/SaveCourse"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="save"
-        android:gravity="left|bottom"/>
+        <com.peter.ovingtongolf.utilities.sqlApplyButton
+            android:layout_width="48dip"
+            android:layout_height="48dip"
+            android:src="@drawable/ic_action_apply"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            app:cb_color="#99CC00"
+            android:layout_marginRight="18dip"
+            android:layout_marginBottom="18dip"/>
+    </RelativeLayout>
 </LinearLayout>

@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +20,7 @@ import com.peter.ovingtongolf.utilities.SlidingTabLayout;
 /**
  * Created by peter on 16/02/15.
  */
-public class frag_edit_course extends Fragment {
+public class frag_edit_course extends Fragment implements ViewPager.OnPageChangeListener {
 
     private ViewPager viewPager;
     private SlidingTabLayout tabHost;
@@ -57,7 +58,25 @@ public class frag_edit_course extends Fragment {
         viewPager.setAdapter(adapter);
         tabHost.setViewPager(viewPager);
 
+        tabHost.setOnPageChangeListener(this);
+
+
         return view;
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        Log.d(this.getClass().getName(), "onPageSelected " + position);
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
     }
 
     private class CoursePagerAdapter extends FragmentStatePagerAdapter {

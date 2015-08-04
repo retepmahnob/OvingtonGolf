@@ -22,15 +22,15 @@ import java.util.UUID;
  * Created by peter on 7/02/15.
  */
 
-public class frag_edit_course_details extends Fragment {
+public class frag_edit_course_details extends Fragment implements sqlEditText.OnFieldChangedListener {
 
     public ContentValues mDataRecord;
     private Button mButtonSave;
 
-    EditText textName;
-    EditText textAddress1;
-    EditText textAddress2;
-    EditText textPhone;
+    sqlEditText textName;
+    sqlEditText textAddress1;
+    sqlEditText textAddress2;
+    sqlEditText textPhone;
     sqlEditText textEmail;
 
     public static frag_edit_course_details newInstance(CourseItem courseItem){
@@ -46,18 +46,39 @@ public class frag_edit_course_details extends Fragment {
         if (savedInstance != null){
         }
     }
+    @Override
+    public void onViewCreated(View view, Bundle saved){
+        super.onViewCreated(view, saved);
+        ViewGroup group = (ViewGroup) view.findViewById(R.id.sqlLayout);
+
+        for(int iChild=0 ; iChild<group.getChildCount() ; iChild++){
+            View v = group.getChildAt(iChild);
+            if (v instanceof sqlEditText){
+                sqlEditText sql = (sqlEditText)(v);
+
+                sql.setSqlListner(this);
+            }
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstance){
 
         View view = inflater.inflate(R.layout.frag_edit_course_details, container, false);
-
-        textName = (EditText)view.findViewById(R.id.EditName);
-        textAddress1 = (EditText)view.findViewById(R.id.EditAddress1);
-        textAddress2 = (EditText)view.findViewById(R.id.EditAddress2);
-        textPhone = (EditText)view.findViewById(R.id.EditPhone);
+        textName = (sqlEditText)view.findViewById(R.id.EditName);
+        textAddress1 = (sqlEditText)view.findViewById(R.id.EditAddress1);
+        textAddress2 = (sqlEditText)view.findViewById(R.id.EditAddress2);
+        textPhone = (sqlEditText)view.findViewById(R.id.EditPhone);
         textEmail = (sqlEditText)view.findViewById(R.id.EditEMail);
+//        textEmail.setSqlListner(this);
+/*        for(int iChild=0 ; iChild<mContainer.getChildCount() ; iChild++){
+            View v = mContainer.getChildAt(iChild);
+            if (v instanceof sqlEditText){
+                sqlEditText sql = (sqlEditText)(v);
 
+                sql.setSqlListner(this);
+            }
+        }*/
         mButtonSave =  (Button)view.findViewById(R.id.SaveCourse);
         mButtonSave.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -129,11 +150,16 @@ public class frag_edit_course_details extends Fragment {
 
     public void setCurrentCourse(CourseItem currentCourse) {
 
-        textName.setText(currentCourse.courseName);
-        textAddress1.setText(currentCourse.courseAddress1);
-        textAddress2.setText(currentCourse.courseAddress2);
-        textPhone.setText(currentCourse.coursePhone);
-        textEmail.setText(currentCourse.courseEMail);
+        textName.setSqlFieldData(currentCourse.courseName);
+        textAddress1.setSqlFieldData(currentCourse.courseAddress1);
+        textAddress2.setSqlFieldData(currentCourse.courseAddress2);
+        textPhone.setSqlFieldData(currentCourse.coursePhone);
+        textEmail.setSqlFieldData(currentCourse.courseEMail);
 
+    }
+
+    @Override
+    public void OnFieldChanged(String table, String field) {
+        Log.d(this.getClass().getName(), "table " + table + "  feild " + field + "  ===========>>>>>>>>>>>>>>>>>");
     }
 }

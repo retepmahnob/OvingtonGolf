@@ -73,7 +73,6 @@
         <com.peter.ovingtongolf.utilities.sqlApplyButton
             android:layout_width="48dip"
             android:layout_height="48dip"
-            android:src="@drawable/ic_action_apply"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
             app:cb_color="#99CC00"

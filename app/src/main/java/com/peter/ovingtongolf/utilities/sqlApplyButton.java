@@ -6,6 +6,7 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.widget.ImageView;
@@ -17,6 +18,10 @@ import com.peter.ovingtongolf.R;
  */
 public class sqlApplyButton extends ImageView {
 
+    public enum sqlButtonAction {baDelete, baRevert, baAdd, baApply};
+
+    public sqlButtonAction currentAction = sqlButtonAction.baAdd;
+
     private static final int PRESSED_COLOR_LIGHTUP = 255 / 25;
     private static final int PRESSED_RING_ALPHA = 75;
     private static final int DEFAULT_PRESSED_RING_WIDTH_DIP = 4;
@@ -26,6 +31,11 @@ public class sqlApplyButton extends ImageView {
     private int centerX;
     private int outerRadius;
     private int pressedRingRadius;
+
+    private Drawable drawDelete;
+    private Drawable drawRevert;
+    private Drawable drawAdd;
+    private Drawable drawApply;
 
     private Paint circlePaint;
     private Paint focusPaint;
@@ -52,6 +62,26 @@ public class sqlApplyButton extends ImageView {
         init(context, attrs);
     }
 
+    public void SetCurrentAction (sqlButtonAction newAction) {
+
+        switch (newAction) {
+            case baAdd:
+                setImageDrawable(drawAdd);
+                break;
+            case baApply:
+                setImageDrawable(drawApply);
+                break;
+            case baDelete:
+                setImageDrawable(drawDelete);
+                break;
+            case baRevert:
+                setImageDrawable(drawRevert);
+                break;
+
+        }
+        currentAction = newAction;
+    }
+
     @Override
     public void setPressed(boolean pressed) {
         super.setPressed(pressed);
@@ -71,6 +101,7 @@ public class sqlApplyButton extends ImageView {
     protected void onDraw(Canvas canvas) {
         canvas.drawCircle(centerX, centerY, pressedRingRadius + animationProgress, focusPaint);
         canvas.drawCircle(centerX, centerY, outerRadius - pressedRingWidth, circlePaint);
+
         super.onDraw(canvas);
     }
 
@@ -124,6 +155,11 @@ public class sqlApplyButton extends ImageView {
         focusPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         focusPaint.setStyle(Paint.Style.STROKE);
 
+        drawDelete = getResources().getDrawable(R.drawable.ic_action_delete);
+        drawRevert = getResources().getDrawable(R.drawable.ic_action_revert);
+        drawAdd = getResources().getDrawable(R.drawable.ic_action_add);
+        drawApply = getResources().getDrawable(R.drawable.ic_action_apply);
+
         pressedRingWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, DEFAULT_PRESSED_RING_WIDTH_DIP, getResources()
                 .getDisplayMetrics());
 
@@ -134,7 +170,7 @@ public class sqlApplyButton extends ImageView {
             pressedRingWidth = (int) a.getDimension(R.styleable.sqlApplyButton_cb_pressedRingWidth, pressedRingWidth);
             a.recycle();
         }
-
+        setImageDrawable(drawAdd);
         setColor(color);
 
         focusPaint.setStrokeWidth(pressedRingWidth);

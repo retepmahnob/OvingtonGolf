@@ -32,11 +32,11 @@ public class frag_edit_course extends Fragment implements ViewPager.OnPageChange
 
     private CoursePagerAdapter adapter;
 
-    public void setCurrentCourse (CourseItem currentCourse){
+    public void setCurrentCourse (String id, CourseItem currentCourse){
         this.currentCourse = currentCourse;
 
         if (courseDetails!=null){
-            courseDetails.setCurrentCourse(currentCourse);
+            courseDetails.setCurrentCourse(id, currentCourse);
         }
 
         adapter.pageCount = 5;

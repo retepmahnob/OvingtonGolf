@@ -6,8 +6,12 @@ import android.content.Context;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.text.TextUtils;
+import android.util.Pair;
+
+import java.util.List;
 
 /**
  * Created by peter on 24/12/14.
@@ -35,11 +39,11 @@ public class golfContentProvider extends ContentProvider {
         final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
         final String authority = sqlcontractGolf.CONTENT_AUTHORITY;
 
-        matcher.addURI(authority, "course", COURSES);
-        matcher.addURI(authority, "course/*", COURSES_ID);
+        matcher.addURI(authority, "courses", COURSES);
+        matcher.addURI(authority, "courses/*", COURSES_ID);
 
-        matcher.addURI(authority, "player", PLAYERS);
-        matcher.addURI(authority, "player/*", PLAYERS_ID);
+        matcher.addURI(authority, "players", PLAYERS);
+        matcher.addURI(authority, "players/*", PLAYERS_ID);
 
         matcher.addURI(authority, "tees", TEES);
         matcher.addURI(authority, "tees/*", TEES_ID);
@@ -142,14 +146,19 @@ public class golfContentProvider extends ContentProvider {
 
         return cursor;
     }
+
+    public static String getTableName(Uri uri){
+        String value = uri.getPath();
+        value = value.replace("/", "");//we need to remove '/'
+        return value;
+    }
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
         // Uisng SQLiteQueryBuilder instead of query() method
 
         final SQLiteDatabase db = mOpenHelper.getReadableDatabase();
-
         final int match = sUriMatcher.match(uri);
-        // Most cases are handled with simple SelectionBuilder
+
         final SelectionBuilder builder = buildExpandedSelection(uri, match);
         boolean distinct = !TextUtils.isEmpty(
                 uri.getQueryParameter(sqlcontractGolf.QUERY_PARAMETER_DISTINCT));
@@ -157,6 +166,8 @@ public class golfContentProvider extends ContentProvider {
         Cursor cursor = builder
                 .where(selection, selectionArgs)
                 .query(db, distinct, projection, sortOrder, null);
+
+
         Context context = getContext();
         if (null != context) {
             cursor.setNotificationUri(context.getContentResolver(), uri);
@@ -198,7 +209,10 @@ public class golfContentProvider extends ContentProvider {
         final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
         final SelectionBuilder builder = buildSimpleSelection(uri);
         final int match = sUriMatcher.match(uri);
-        int retVal = builder.where(selection, selectionArgs).delete(db);
+        int retVal = builder
+                .where(selection, selectionArgs)
+                .delete(db);
+        getContext().getContentResolver().notifyChange(uri, null);
         return retVal;
     }
 

@@ -115,7 +115,7 @@ public class frag_list_courses extends Fragment implements LoaderManager.LoaderC
 
     @Override
     public void onLoaderReset(Loader loader) {
-
+        Log.d("Golf Courses", "Loader Reset");
     }
 
     @Override

@@ -3,11 +3,16 @@
     <declare-styleable name="sqlEditText">
         <attr name="field" format="string"/>
         <attr name="table" format="string"/>
+        <attr name="sql_color" format="color" />
+        <attr name="sql_pressedRingWidth" format="dimension" />
+        <attr name="sql_buttonFunction">
+            <flag name="add" value="1" />
+            <flag name="apply" value="2" />
+            <flag name="delete" value="4" />
+            <flag name="undo" value="8" />
+        </attr>
+
     </declare-styleable>
 
-    <declare-styleable name="sqlApplyButton">
-        <attr name="cb_color" format="color" />
-        <attr name="cb_pressedRingWidth" format="dimension" />
-    </declare-styleable>
 
 </resources>

@@ -53,7 +53,7 @@ public class courseListAdapter extends RecyclerView.Adapter<courseListAdapter.co
 
                 courseListItem course = new courseListItem();
                 Log.d("Golf", "onB indViewHolder" + position);
-                holder.title.setText(mCursor.getString(1));
+                holder.title.setText(mCursor.getString(2));
                 holder.icon.setImageResource(course.iconId);
             }
         }

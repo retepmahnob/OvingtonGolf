@@ -29,12 +29,21 @@ public class sqlEditText extends EditText{
     private Drawable drawDelete;
     private Drawable drawRevert;
     private OnFieldChangedListener mListener;
+    private boolean mTriggerListeners = true;
+
+    public void GetSqlConfiguration(StringBuilder sTable, StringBuilder sField) {
+
+        sTable.append(sqlTable);
+        sField.append(sqlField);
+
+    }
+
     private enum clickAction {caDelete, caRevert};
     clickAction currentAction = clickAction.caDelete;
 
     public interface OnFieldChangedListener {
 
-        public void OnFieldChanged(String table, String field);
+        public void OnFieldChanged(sqlEditText editField, String originalValue, String currentValue);
     }
 
     public sqlEditText(Context context) {
@@ -124,13 +133,16 @@ public class sqlEditText extends EditText{
     }
 
     public void setSqlFieldData(CharSequence text) {
+        mTriggerListeners = false;
         super.setText(text);
         originalText = text;
+        mTriggerListeners = true;
     }
 
-    public void onTextChanged() {
-        if (mListener != null)
-            mListener.OnFieldChanged(sqlTable, sqlField);
+    public void onTextChanged()
+    {
+        if (mListener != null && mTriggerListeners)
+            mListener.OnFieldChanged(this, getText().toString(), originalText.toString());
     }
 
     @Override
@@ -138,7 +150,7 @@ public class sqlEditText extends EditText{
         super.setText(text, type);
     }
 
-    public void setSqlListner(OnFieldChangedListener l){
+    public void setSqlListener(OnFieldChangedListener l){
         mListener = (OnFieldChangedListener) l;
     }
 
@@ -165,8 +177,9 @@ public class sqlEditText extends EditText{
         setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Log.d(this.getClass().getName(), "OnClickListener");
-                if (mListener != null)
-                    mListener.OnFieldChanged(sqlTable, sqlField);
+                if (mListener != null) {
+                 //   mListener.OnFieldChanged(sqlTable, sqlField);
+                }
             }
         });
 
@@ -191,8 +204,7 @@ public class sqlEditText extends EditText{
                                 setText("");
                                 hasDeleted = true;
                                 setClearIconVisible(true);
-                            }
-                            else if (currentAction == clickAction.caRevert) {
+                            } else if (currentAction == clickAction.caRevert) {
                                 setText(originalText);
                                 hasDeleted = false;
                                 setClearIconVisible(false);

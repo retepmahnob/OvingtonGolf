@@ -18,8 +18,13 @@ import com.peter.ovingtongolf.R;
  */
 public class sqlApplyButton extends ImageView {
 
-    public enum sqlButtonAction {baDelete, baRevert, baAdd, baApply};
+    public enum sqlButtonAction {baDelete, baUndo, baAdd, baApply};
 
+    public static final int SQL_DELETE = 4;
+    public static final int SQL_UNDO = 8;
+    public static final int SQL_ADD = 1;
+    public static final int SQL_APPLY = 2;
+    public int EnabledFunctions = 0;
     public sqlButtonAction currentAction = sqlButtonAction.baAdd;
 
     private static final int PRESSED_COLOR_LIGHTUP = 255 / 25;
@@ -46,6 +51,19 @@ public class sqlApplyButton extends ImageView {
     private int defaultColor = Color.BLACK;
     private int pressedColor;
     private ObjectAnimator pressedAnimator;
+
+    private OnSqlActionListener mListener;
+
+    public interface OnSqlActionListener {
+
+        public void OnActionRequested(sqlApplyButton button, sqlButtonAction action, boolean isPressed);
+    }
+
+    public int setSqlListener(OnSqlActionListener l){
+
+        mListener = (OnSqlActionListener) l;
+        return EnabledFunctions;
+    }
 
     public sqlApplyButton(Context context) {
         super(context);
@@ -74,7 +92,7 @@ public class sqlApplyButton extends ImageView {
             case baDelete:
                 setImageDrawable(drawDelete);
                 break;
-            case baRevert:
+            case baUndo:
                 setImageDrawable(drawRevert);
                 break;
 
@@ -95,6 +113,8 @@ public class sqlApplyButton extends ImageView {
         } else {
             hidePressedRing();
         }
+        if (mListener != null)
+            mListener.OnActionRequested(this, currentAction, pressed);
     }
 
     @Override
@@ -165,9 +185,10 @@ public class sqlApplyButton extends ImageView {
 
         int color = Color.BLACK;
         if (attrs != null) {
-            final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.sqlApplyButton);
-            color = a.getColor(R.styleable.sqlApplyButton_cb_color, color);
-            pressedRingWidth = (int) a.getDimension(R.styleable.sqlApplyButton_cb_pressedRingWidth, pressedRingWidth);
+            final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.sqlEditText);
+            color = a.getColor(R.styleable.sqlEditText_sql_color, color);
+            pressedRingWidth = (int) a.getDimension(R.styleable.sqlEditText_sql_pressedRingWidth, pressedRingWidth);
+            EnabledFunctions = (int) a.getInt(R.styleable.sqlEditText_sql_buttonFunction, 0);
             a.recycle();
         }
         setImageDrawable(drawAdd);

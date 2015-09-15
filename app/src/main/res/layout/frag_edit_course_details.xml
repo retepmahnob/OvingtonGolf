@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:sqledit="http://schemas.android.com/tools"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:sqledit="http://schemas.android.com/apk/res-auto"
+              xmlns:sqlapplybutton="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical"
               android:id="@+id/sqlLayout"
               android:layout_width="match_parent"
@@ -71,12 +71,25 @@
             android:gravity="right|bottom"/>
 
         <com.peter.ovingtongolf.utilities.sqlApplyButton
+            android:id="@+id/SqlApplyButton"
             android:layout_width="48dip"
             android:layout_height="48dip"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
-            app:cb_color="#99CC00"
+            sqledit:sql_color="#99CCaa"
+            sqledit:sql_buttonFunction="add|apply"
             android:layout_marginRight="18dip"
+            android:layout_marginBottom="18dip"/>
+
+        <com.peter.ovingtongolf.utilities.sqlApplyButton
+            android:id="@+id/SqlAddButton"
+            android:layout_width="48dip"
+            android:layout_height="48dip"
+            android:layout_toLeftOf="@+id/SqlApplyButton"
+            android:layout_alignParentBottom="true"
+            sqledit:sql_color="#99CCaa"
+            sqledit:sql_buttonFunction="undo|delete"
+            android:layout_marginRight="9dip"
             android:layout_marginBottom="18dip"/>
     </RelativeLayout>
 </LinearLayout>

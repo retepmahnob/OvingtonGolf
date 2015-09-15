@@ -10,10 +10,10 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="drawer_open">Drawer Open</string>
     <string name="drawer_close">Drawer Close</string>
-    <string name="lblCourseName">Course name</string>
-    <string name="lblAddressLine1">Address line 1</string>
-    <string name="lblAddressLine2">Address line 2</string>
-    <string name="lblCoursePhone">Phone number</string>
-    <string name="lblCourseEMail">Course Email</string>
+    <string name="lblCourseName">course name</string>
+    <string name="lblAddressLine1">address line 1</string>
+    <string name="lblAddressLine2">address line 2</string>
+    <string name="lblCoursePhone">phone number</string>
+    <string name="lblCourseEMail">email address</string>
 
 </resources>

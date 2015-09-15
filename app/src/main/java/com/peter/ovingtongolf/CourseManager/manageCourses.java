@@ -84,7 +84,7 @@ public class manageCourses extends ActionBarActivity implements frag_list_course
         if (c.moveToFirst()) {
             CourseItem Course = new CourseItem();
             Course.fromCursor(c);
-            courseFragment.setCurrentCourse (Course);
+            courseFragment.setCurrentCourse (id, Course);
         }
 
         c.close();

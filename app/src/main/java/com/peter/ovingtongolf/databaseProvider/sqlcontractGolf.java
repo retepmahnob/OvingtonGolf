@@ -65,7 +65,7 @@ public class sqlcontractGolf {
 
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
 
-    private static final String PATH_COURSE = "course";
+    private static final String PATH_COURSE = "courses";
     private static final String PATH_PLAYER = "player";
     private static final String PATH_HOLES = "holes";
     private static final String PATH_TEES = "tees";

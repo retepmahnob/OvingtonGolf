@@ -16,6 +16,7 @@ package com.peter.ovingtongolf.utilities;
  * limitations under the License.
  */
 
+import android.graphics.Color;
 import android.view.View;
 
 
@@ -100,6 +101,7 @@ public class SlidingTabLayout extends HorizontalScrollView {
         mTitleOffset = (int) (TITLE_OFFSET_DIPS * getResources().getDisplayMetrics().density);
 
         mTabStrip = new SlidingTabStrip(context);
+        setSelectedIndicatorColors(Color.CYAN, Color.GREEN, Color.YELLOW);
         addView(mTabStrip, LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
     }
 

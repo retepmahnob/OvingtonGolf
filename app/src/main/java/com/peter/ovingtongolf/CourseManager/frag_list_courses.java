@@ -10,6 +10,7 @@ import android.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,7 +73,7 @@ public class frag_list_courses extends Fragment implements LoaderManager.LoaderC
         adapter = new courseListAdapter(getActivity(), this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
+        registerForContextMenu(recyclerView);
         return layout;
     }
 
@@ -103,14 +104,19 @@ public class frag_list_courses extends Fragment implements LoaderManager.LoaderC
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
 
+        String initialItem = null;
         if (data != null) {
             if (data.moveToFirst()) {
+                initialItem = data.getString(0);
                 do {
                     Log.d("Golf Courses", data.getString(0) + "->"+data.getString(1) + "->"+data.getString(2));
                 } while (data.moveToNext());
             }
         }
         adapter.swapCursor(data);
+        if (mListener != null && initialItem!=null) {
+            mListener.onCourseSelected(initialItem);
+        }
     }
 
     @Override

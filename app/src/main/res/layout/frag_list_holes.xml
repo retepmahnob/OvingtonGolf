@@ -1,17 +1,60 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="100dp"
-              android:layout_height="100dp"
-              android:orientation="horizontal"
+              xmlns:sqledit="http://schemas.android.com/apk/res-auto"
               tools:context="com.peter.ovingtongolf.CourseManager.frag_list_holes"
-              android:gravity="center">
+              android:orientation="horizontal"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/hole_lister"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    <LinearLayout android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
+                    android:background="@color/accentColor"
+                    android:layout_height="wrap_content">
 
-    </android.support.v7.widget.RecyclerView>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/tee_lister"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_gravity="fill_vertical"
+            android:layout_width="fill_parent"
+            android:background="@color/primaryColorDark"
+            />
 
+
+        <RelativeLayout android:orientation="horizontal"
+                      android:background="@color/accentColor"
+                      android:layout_width="fill_parent"
+                      android:layout_height="wrap_content">
+
+            <com.peter.ovingtongolf.utilities.sqlApplyButton
+                android:id="@+id/SqlApplyTee"
+                android:layout_width="48dip"
+                android:layout_height="48dip"
+                sqledit:sql_color="#99CCaa"
+                sqledit:sql_buttonFunction="add|apply"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="2dip"/>
+
+            <com.peter.ovingtongolf.utilities.sqlApplyButton
+                android:id="@+id/SqlAddTee"
+                android:layout_width="48dip"
+                android:layout_height="48dip"
+                sqledit:sql_color="#99CCaa"
+                sqledit:sql_buttonFunction="undo|delete"
+                android:layout_toLeftOf="@+id/SqlApplyTee"
+                android:layout_marginBottom="2dip"/>
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+    <ListView
+        android:layout_width="0dp"
+        android:layout_weight="2"
+        android:layout_height="fill_parent"
+        android:background="@color/accent_material_dark"
+        >
+    </ListView>
 
 </LinearLayout>

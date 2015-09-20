@@ -15,20 +15,32 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.peter.ovingtongolf.Data.CourseItem;
 import com.peter.ovingtongolf.R;
 import com.peter.ovingtongolf.databaseProvider.sqlcontractGolf;
 
 /**
  * Created by peter on 18/02/15.
  */
-public class frag_list_course_holes extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>, hole_list_adapter.Callbacks {
+public class frag_list_course_holes extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>, tee_list_adapter.Callbacks {
 
-    private static final int URL_LOADER = 0;
-    private RecyclerView recyclerView;
-    private hole_list_adapter adapter;
+    private static final int URL_TEE_LOADER = 0;
+    private RecyclerView recyclerTeeView;
+    private tee_list_adapter adapterTee ;
 
     private static final String[] PROJECTION = new String[] { "hole_tee_colour", "hole_number", "hole_par" };
     private OnHoleSelectedListener mListener;
+    private String currentTeeId;
+    private String currentCourseId = "";
+
+    public static frag_list_course_holes newInstance(CourseItem courseItem){
+
+        frag_list_course_holes courseHoles = new frag_list_course_holes();
+        if (courseItem!=null)
+            courseHoles.currentCourseId = courseItem.courseId;
+        return courseHoles;
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -36,14 +48,19 @@ public class frag_list_course_holes extends Fragment implements LoaderManager.Lo
         // Inflate the layout for this fragment
         View layout = inflater.inflate(R.layout.frag_list_holes, container, false);
 
-        getLoaderManager().initLoader(URL_LOADER, null, this);
+        getLoaderManager().initLoader(URL_TEE_LOADER, null, this);
 
-        recyclerView = (RecyclerView) layout.findViewById(R.id.hole_lister);
-        adapter = new hole_list_adapter(getActivity(), this);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerTeeView = (RecyclerView) layout.findViewById(R.id.tee_lister);
+        adapterTee = new tee_list_adapter(getActivity(), this);
+        recyclerTeeView.setAdapter(adapterTee);
+        recyclerTeeView.setLayoutManager(new LinearLayoutManager(getActivity()));
         Log.d(this.getClass().getName(), "onCreate called ");
         return layout;
+    }
+
+    public void SetCurrentCourseId (String courseId){
+        currentCourseId = courseId;
+        getLoaderManager().restartLoader(URL_TEE_LOADER, null, this);
     }
 
     @Override
@@ -67,9 +84,13 @@ public class frag_list_course_holes extends Fragment implements LoaderManager.Lo
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        String[] projection = {sqlcontractGolf.Tees._ID, sqlcontractGolf.Tees.TEE_COLOUR, sqlcontractGolf.Tees.TEE_SEX};
-        CursorLoader cursorLoader = new CursorLoader(getActivity(), sqlcontractGolf.Tees.buildUri(), projection, null, null, null);
-        return cursorLoader;
+
+        if (id == URL_TEE_LOADER){
+            String[] projection = {sqlcontractGolf.Tees._ID, sqlcontractGolf.Tees.TEE_COLOUR, sqlcontractGolf.Tees.TEE_SEX};
+            CursorLoader cursorLoader = new CursorLoader(getActivity(), sqlcontractGolf.Tees.buildUri(), projection, sqlcontractGolf.Tees.COURSE_ID+"=?", new String[]{currentCourseId}, null);
+            return cursorLoader;
+        }
+        return null;
     }
 
     @Override
@@ -81,7 +102,7 @@ public class frag_list_course_holes extends Fragment implements LoaderManager.Lo
                 } while (data.moveToNext());
             }
         }
-        adapter.swapCursor(data);
+        adapterTee.swapCursor(data);
     }
 
     @Override

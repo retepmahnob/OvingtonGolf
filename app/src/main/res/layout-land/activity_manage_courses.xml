@@ -27,10 +27,12 @@
             android:layout_height="match_parent"
             android:layout_width="0dp"
             android:layout_weight="3"
-            tools:context="com.peter.ovingtongolf.CourseManager.frag_list_courses"/>
+            android:layout_marginRight="4dp"
+            tools:context="com.peter.ovingtongolf.CourseManager.frag_list_courses"
+            tools:layout="@layout/frag_list_courses"/>
 
         <FrameLayout
-            android:id="@+id/editcourse_detail_container"
+            android:id="@+id/editcourse_container"
             android:layout_height="match_parent"
             android:background="#CAC"
             android:layout_width="0dp"

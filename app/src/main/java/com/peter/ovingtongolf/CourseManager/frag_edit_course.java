@@ -38,6 +38,8 @@ public class frag_edit_course extends Fragment implements ViewPager.OnPageChange
         if (courseDetails!=null){
             courseDetails.setCurrentCourse(id, currentCourse);
         }
+        if (courseHoles!=null)
+            courseHoles.SetCurrentCourseId(id);
 
         adapter.pageCount = 5;
         adapter.notifyDataSetChanged();
@@ -79,7 +81,7 @@ public class frag_edit_course extends Fragment implements ViewPager.OnPageChange
 
     }
 
-    private class CoursePagerAdapter extends FragmentStatePagerAdapter {
+    private class CoursePagerAdapter extends FragmentPagerAdapter {
 
         private String[] TabTiles = {"Details", "Location", "Holes", "History", "Another 1", "Another 2", "Another 3", "Another 4"};
 
@@ -99,7 +101,7 @@ public class frag_edit_course extends Fragment implements ViewPager.OnPageChange
                     courseLocation = frag_edit_course_location.newInstance(currentCourse);
                     return courseLocation;
                 case 2:
-                    courseHoles = new frag_list_course_holes();
+                    courseHoles = frag_list_course_holes.newInstance(currentCourse);
                     return courseHoles;
                 default:
                     return new frag_edit_course_details();

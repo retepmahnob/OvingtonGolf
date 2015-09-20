@@ -30,6 +30,7 @@ public class sqlcontractGolf {
     interface TeesColumns {
         /** Unique string identifying this block of time. */
         String TEE_ID = "tee_id";
+        String COURSE_ID = "course_id";
         String TEE_COURSE_ID = "tee_course_id";
         String TEE_COLOUR = "tee_colour";
         String TEE_SEX = "tee_sex";
@@ -39,6 +40,7 @@ public class sqlcontractGolf {
     interface HolesColumns {
         /** Unique string identifying this block of time. */
         String HOLE_ID = "hole_id";
+        String COURSE_ID = "course_id";
         String HOLE_TEE_ID = "hole_tee_id";
         String HOLE_NUMBER = "hole_number";
         String HOLE_PAR = "hole_par";

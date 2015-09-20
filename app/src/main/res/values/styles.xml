@@ -12,8 +12,8 @@
     </style>
 
     <style name="GolfCustomToolBarTheme" parent="Theme.AppCompat.Light">
-        <item name="android:textColorPrimary">#F00</item>
-        <item name="android:textColorSecondary">#00F</item>
+        <item name="android:textColorPrimary">#00F</item>
+        <item name="android:textColorSecondary">#F00</item>
     </style>
 
 

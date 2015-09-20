@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+<!--
     <color name="primaryColor">#FFEB3B</color>
     <color name="primaryColorDark">#FBC02D</color>
     <color name="accentColor">#50514F</color>
+-->
+    <color name="primaryColor">#ffebee</color>
+    <color name="primaryColorDark">#119911</color>
+    <color name="accentColor">#50514F</color>
+    <color name="barColor">#757575</color>
 </resources>

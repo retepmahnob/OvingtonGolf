@@ -22,7 +22,7 @@ public class MainActivity extends ActionBarActivity {
 
         setSupportActionBar(toolBar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-//        getSupportActionBar().setBackgroundDrawable()
+        getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.golf_view));
         NavigationDrawerFragment drawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
         drawerFragment.Setup(R.id.fragment_navigation_drawer, (android.support.v4.widget.DrawerLayout) findViewById(R.id.drawer_layout), toolBar);
         

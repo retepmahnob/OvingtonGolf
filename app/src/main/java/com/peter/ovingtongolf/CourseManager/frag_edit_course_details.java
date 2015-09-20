@@ -32,11 +32,12 @@ public class frag_edit_course_details extends Fragment {
     sqlEditText textAddress2;
     sqlEditText textPhone;
     sqlEditText textEmail;
+    CourseItem CurrentCourse = new CourseItem();
 
     public static frag_edit_course_details newInstance(CourseItem courseItem){
 
         frag_edit_course_details courseDetails = new frag_edit_course_details();
-
+        courseDetails.CurrentCourse.assign(courseItem);
         return courseDetails;
     }
 
@@ -67,33 +68,9 @@ public class frag_edit_course_details extends Fragment {
         textPhone = (sqlEditText)view.findViewById(R.id.EditPhone);
         textEmail = (sqlEditText)view.findViewById(R.id.EditEMail);
 
-        mButtonSave =  (Button)view.findViewById(R.id.SaveCourse);
-        mButtonSave.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-
-                final UUID courseUUId = UUID.randomUUID();
-
-                ContentValues values = new ContentValues();
-                values.put(sqlcontractGolf.Course.COURSE_ID, courseUUId.toString());
-                values.put(sqlcontractGolf.Course.COURSE_NAME, textName.getText().toString());
-                values.put(sqlcontractGolf.Course.COURSE_ADDR1, textAddress1.getText().toString());
-                values.put(sqlcontractGolf.Course.COURSE_ADDR2, textAddress2.getText().toString());
-                values.put(sqlcontractGolf.Course.COURSE_PHONE, textPhone.getText().toString());
-                values.put(sqlcontractGolf.Course.COURSE_EMAIL, textEmail.getText().toString());
-                getActivity().getContentResolver().insert(sqlcontractGolf.Course.buildUri(), values);
-//                mListener.onCourseAdded(courseUUId);
-                ContentValues tees = new ContentValues();
-                tees.put(sqlcontractGolf.Tees.TEE_COURSE_ID, courseUUId.toString());
-                tees.put(sqlcontractGolf.Tees.TEE_COLOUR, "White");
-                tees.put(sqlcontractGolf.Tees.TEE_SLOPE, 116);
-                tees.put(sqlcontractGolf.Tees.TEE_SEX, "Male");
-                getActivity().getContentResolver().insert(sqlcontractGolf.Tees.buildUri(), tees);
-            }
-        });
         return view;
 
     }
-
     @Override
     public void onStart() {
         super.onStart();
@@ -104,12 +81,21 @@ public class frag_edit_course_details extends Fragment {
     public void onResume() {
         super.onResume();
         Log.d(this.getClass().getName(), "onResume called ");
+        populateFields();
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+        CurrentCourse.toBundle(outState);
         Log.d(this.getClass().getName(), "onSaveInstanceState called ");
+    }
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (savedInstanceState != null) {
+            CurrentCourse.fromBundle(savedInstanceState);
+        }
     }
 
     @Override
@@ -135,14 +121,20 @@ public class frag_edit_course_details extends Fragment {
         super.onDetach();
         Log.d(this.getClass().getName(), "onDetach called ");
     }
+    public void populateFields() {
 
+        if (CurrentCourse !=null) {
+
+            textName.setSqlFieldData(CurrentCourse.courseName);
+            textAddress1.setSqlFieldData(CurrentCourse.courseAddress1);
+            textAddress2.setSqlFieldData(CurrentCourse.courseAddress2);
+            textPhone.setSqlFieldData(CurrentCourse.coursePhone);
+            textEmail.setSqlFieldData(CurrentCourse.courseEMail);
+        }
+    }
     public void setCurrentCourse(String id, CourseItem currentCourse) {
-
-        textName.setSqlFieldData(currentCourse.courseName);
-        textAddress1.setSqlFieldData(currentCourse.courseAddress1);
-        textAddress2.setSqlFieldData(currentCourse.courseAddress2);
-        textPhone.setSqlFieldData(currentCourse.coursePhone);
-        textEmail.setSqlFieldData(currentCourse.courseEMail);
+        CurrentCourse.assign(currentCourse);
+        populateFields();
         sqlConnector.OnCurrentRecordChanged(id);
     }
 }

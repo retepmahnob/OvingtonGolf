@@ -29,14 +29,15 @@ public class manageCourses extends ActionBarActivity implements frag_list_course
         Toolbar toolBar = (Toolbar) findViewById(R.id.app_bar);
         setSupportActionBar(toolBar);
         getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.golf_view));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        if (findViewById(R.id.editcourse_detail_container) != null){
+        if (findViewById(R.id.editcourse_container) != null){
             mEditActive = true;
             courseFragment = new frag_edit_course();
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.editcourse_detail_container, courseFragment)
+                    .replace(R.id.editcourse_container, courseFragment)
                     .commit();
 
         }

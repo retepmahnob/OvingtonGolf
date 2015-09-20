@@ -49,6 +49,7 @@ public class GolfDatabase extends SQLiteOpenHelper{
 
         db.execSQL("CREATE TABLE " + Tables.HOLES + " ("
                 + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + sqlcontractGolf.HolesColumns.COURSE_ID + " TEXT NOT NULL,"
                 + sqlcontractGolf.HolesColumns.HOLE_ID + " TEXT NOT NULL,"
                 + sqlcontractGolf.HolesColumns.HOLE_NUMBER + " TEXT NOT NULL, "
                 + sqlcontractGolf.HolesColumns.HOLE_MAP_LATITUDE + " TEXT, "
@@ -59,6 +60,7 @@ public class GolfDatabase extends SQLiteOpenHelper{
 
         db.execSQL("CREATE TABLE " + Tables.TEES + " ("
                 + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + sqlcontractGolf.HolesColumns.COURSE_ID + " TEXT NOT NULL,"
                 + sqlcontractGolf.TeesColumns.TEE_COLOUR + " TEXT NOT NULL, "
                 + sqlcontractGolf.TeesColumns.TEE_COURSE_ID+ " TEXT NOT NULL, "
                 + sqlcontractGolf.TeesColumns.TEE_SEX+ " TEXT NOT NULL, "

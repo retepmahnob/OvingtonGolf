@@ -4,9 +4,9 @@
               xmlns:sqlapplybutton="http://schemas.android.com/apk/res-auto"
               android:orientation="vertical"
               android:id="@+id/sqlLayout"
-              android:background="@color/barColor"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+              android:background="@color/accentColor">
 
 
     <com.peter.ovingtongolf.utilities.sqlEditText
@@ -14,10 +14,15 @@
         android:layout_height="wrap_content"
         android:hint="@string/lblCourseName"
         android:inputType="text"
+        android:singleLine="true"
         android:layout_width="fill_parent"
         sqledit:table="courses"
         sqledit:field="course_name"
-    />
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginRight="2dp"
+        android:layout_marginBottom="2dp"/>
+
 
 
     <com.peter.ovingtongolf.utilities.sqlEditText
@@ -25,10 +30,11 @@
         android:layout_height="wrap_content"
         android:hint="@string/lblAddressLine1"
         android:inputType="text"
+        android:singleLine="true"
         android:layout_width="fill_parent"
         sqledit:table="courses"
         sqledit:field="course_addr1"
-    />
+        android:layout_margin="2dp"/>
 
     <com.peter.ovingtongolf.utilities.sqlEditText
         android:id="@+id/EditAddress2"
@@ -36,10 +42,9 @@
         android:hint="@string/lblAddressLine2"
         android:inputType="textPostalAddress"
         android:layout_width="fill_parent"
-        android:background="@color/abc_search_url_text_normal"
         sqledit:table="courses"
         sqledit:field="course_addr2"
-    />
+        android:layout_margin="2dp"/>
 
     <com.peter.ovingtongolf.utilities.sqlEditText
         android:id="@+id/EditPhone"
@@ -49,7 +54,8 @@
         android:layout_width="fill_parent"
         sqledit:table="courses"
         sqledit:field="course_phone"
-    />
+        android:layout_margin="2dp"
+        />
 
     <com.peter.ovingtongolf.utilities.sqlEditText
         android:id="@+id/EditEMail"
@@ -59,17 +65,13 @@
         android:layout_width="fill_parent"
         sqledit:table="courses"
         sqledit:field="course_email"
-    />
+        android:layout_margin="2dp"/>
+
     <RelativeLayout android:orientation="horizontal"
                   android:layout_width="match_parent"
+                  android:background="@color/accentColor"
                   android:layout_height="wrap_content">
-        <Button
-            android:id="@+id/SaveCourse"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/primaryColor"
-            android:text="save"
-            android:gravity="right|bottom"/>
+
 
         <com.peter.ovingtongolf.utilities.sqlApplyButton
             android:id="@+id/SqlApplyButton"

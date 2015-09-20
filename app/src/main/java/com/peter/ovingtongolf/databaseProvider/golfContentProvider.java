@@ -147,6 +147,7 @@ public class golfContentProvider extends ContentProvider {
         return cursor;
     }
 
+
     public static String getTableName(Uri uri){
         String value = uri.getPath();
         value = value.replace("/", "");//we need to remove '/'

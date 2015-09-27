@@ -48,8 +48,8 @@ public class golfContentProvider extends ContentProvider {
         matcher.addURI(authority, "tees", TEES);
         matcher.addURI(authority, "tees/*", TEES_ID);
 
-        matcher.addURI(authority, "holes", PLAYERS);
-        matcher.addURI(authority, "holes/*", PLAYERS_ID);
+        matcher.addURI(authority, "holes", HOLES);
+        matcher.addURI(authority, "holes/*", HOLES_ID);
         return matcher;
     }
 
@@ -128,7 +128,7 @@ public class golfContentProvider extends ContentProvider {
                         .where(sqlcontractGolf.Tees._ID + "=?", teeId);
             }
             case HOLES: {
-                return builder.table(GolfDatabase.Tables.TEES);
+                return builder.table(GolfDatabase.Tables.HOLES);
             }
             case HOLES_ID: {
                 final String holeId = sqlcontractGolf.Tees.getId(uri);
@@ -180,28 +180,40 @@ public class golfContentProvider extends ContentProvider {
     public Uri insert(Uri uri, ContentValues values) {
 
         final SQLiteDatabase db = mOpenHelper.getWritableDatabase();
+        long result = 0;
         final int match = sUriMatcher.match(uri);
+        Uri resultUri;
         switch (match) {
             case COURSES: {
-                db.insertOrThrow(GolfDatabase.Tables.COURSES, null, values);
-                return sqlcontractGolf.Course.buildUri(values.getAsString(sqlcontractGolf.Course.COURSE_ID));
+                result = db.insertOrThrow(GolfDatabase.Tables.COURSES, null, values);
+                resultUri = sqlcontractGolf.Course.buildUri(String.valueOf(result));
+                values.put(sqlcontractGolf.Course._ID, String.valueOf(result));
+                break;
             }
             case PLAYERS: {
-                db.insertOrThrow(GolfDatabase.Tables.PLAYERS, null, values);
-                return sqlcontractGolf.Player.buildUri(values.getAsString(sqlcontractGolf.Player.PLAYER_ID));
+                result = db.insertOrThrow(GolfDatabase.Tables.PLAYERS, null, values);
+                resultUri = sqlcontractGolf.Player.buildUri(String.valueOf(result));
+                values.put(sqlcontractGolf.Player._ID, String.valueOf(result));
+                break;
             }
             case TEES: {
-                db.insertOrThrow(GolfDatabase.Tables.TEES, null, values);
-                return sqlcontractGolf.Tees.buildUri(values.getAsString(sqlcontractGolf.Tees._ID));
+                result = db.insertOrThrow(GolfDatabase.Tables.TEES, null, values);
+                resultUri = sqlcontractGolf.Tees.buildUri(String.valueOf(result));
+                values.put(sqlcontractGolf.Tees._ID, String.valueOf(result));
+                break;
             }
             case HOLES: {
-                db.insertOrThrow(GolfDatabase.Tables.HOLES, null, values);
-                return sqlcontractGolf.Tees.buildUri(values.getAsString(sqlcontractGolf.Holes.HOLE_ID));
+                result = db.insertOrThrow(GolfDatabase.Tables.HOLES, null, values);
+                resultUri = sqlcontractGolf.Holes.buildUri(String.valueOf(result));
+                values.put(sqlcontractGolf.Holes._ID, String.valueOf(result));
+                break;
             }
             default: {
                 throw new UnsupportedOperationException("Unknown insert uri: " + uri);
             }
         }
+        getContext().getContentResolver().notifyChange(resultUri, null);
+        return resultUri;
     }
 
     @Override

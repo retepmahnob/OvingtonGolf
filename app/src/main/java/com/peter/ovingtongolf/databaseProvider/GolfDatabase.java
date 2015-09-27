@@ -14,7 +14,7 @@ public class GolfDatabase extends SQLiteOpenHelper{
 
 //    private static final String TAG = makeLogTag(GolfDatabase.class);
 
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
 //    private static final String DATABASE_NAME = "golf.db";
     private final Context mContext;
 
@@ -47,25 +47,22 @@ public class GolfDatabase extends SQLiteOpenHelper{
                 + sqlcontractGolf.CourseColumns.COURSE_SLOPE + " INTEGER,"
                 + "UNIQUE (" + sqlcontractGolf.CourseColumns.COURSE_ID + ") ON CONFLICT REPLACE)");
 
+        db.execSQL("CREATE TABLE " + Tables.TEES + " ("
+                + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + sqlcontractGolf.TeesColumns.TEE_COURSE_ID+ " TEXT NOT NULL, "
+                + sqlcontractGolf.TeesColumns.TEE_COLOUR + " TEXT NOT NULL, "
+                + sqlcontractGolf.TeesColumns.TEE_SEX+ " TEXT NOT NULL, "
+                + sqlcontractGolf.TeesColumns.TEE_SLOPE+ " INTEGER)");
+//                + "UNIQUE (" + sqlcontractGolf.TeesColumns._ID+ ") ON CONFLICT REPLACE)");
+
         db.execSQL("CREATE TABLE " + Tables.HOLES + " ("
                 + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + sqlcontractGolf.HolesColumns.COURSE_ID + " TEXT NOT NULL,"
-                + sqlcontractGolf.HolesColumns.HOLE_ID + " TEXT NOT NULL,"
+                + sqlcontractGolf.HolesColumns.HOLE_TEE_ID + " TEXT NOT NULL,"
                 + sqlcontractGolf.HolesColumns.HOLE_NUMBER + " TEXT NOT NULL, "
                 + sqlcontractGolf.HolesColumns.HOLE_MAP_LATITUDE + " TEXT, "
                 + sqlcontractGolf.HolesColumns.HOLE_MAP_LONGITUDE + " TEXT, "
                 + sqlcontractGolf.HolesColumns.HOLE_PAR+ " INTEGER, "
-                + sqlcontractGolf.HolesColumns.HOLE_STROKE+ " INTEGER, "
-                + "UNIQUE (" + sqlcontractGolf.HolesColumns.HOLE_ID+ ") ON CONFLICT REPLACE)");
-
-        db.execSQL("CREATE TABLE " + Tables.TEES + " ("
-                + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + sqlcontractGolf.HolesColumns.COURSE_ID + " TEXT NOT NULL,"
-                + sqlcontractGolf.TeesColumns.TEE_COLOUR + " TEXT NOT NULL, "
-                + sqlcontractGolf.TeesColumns.TEE_COURSE_ID+ " TEXT NOT NULL, "
-                + sqlcontractGolf.TeesColumns.TEE_SEX+ " TEXT NOT NULL, "
-                + sqlcontractGolf.TeesColumns.TEE_SLOPE+ " INTEGER)");
-//                + "UNIQUE (" + sqlcontractGolf.TeesColumns._ID+ ") ON CONFLICT REPLACE)");
+                + sqlcontractGolf.HolesColumns.HOLE_STROKE+ " INTEGER)");
 
         db.execSQL("CREATE TABLE " + Tables.PLAYERS + " ("
                 + BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"

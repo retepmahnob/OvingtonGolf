@@ -14,7 +14,6 @@ public class sqlcontractGolf {
     private static final String COMMA_SEP = ",";
 
     interface CourseColumns {
-        /** Unique string identifying this block of time. */
         String COURSE_ID = "course_id";
         String COURSE_NAME = "course_name";
         String COURSE_STATUS = "course_status";
@@ -28,7 +27,6 @@ public class sqlcontractGolf {
     }
 
     interface TeesColumns {
-        /** Unique string identifying this block of time. */
         String TEE_ID = "tee_id";
         String COURSE_ID = "course_id";
         String TEE_COURSE_ID = "tee_course_id";
@@ -38,7 +36,6 @@ public class sqlcontractGolf {
     }
 
     interface HolesColumns {
-        /** Unique string identifying this block of time. */
         String HOLE_ID = "hole_id";
         String COURSE_ID = "course_id";
         String HOLE_TEE_ID = "hole_tee_id";
@@ -67,23 +64,23 @@ public class sqlcontractGolf {
 
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
 
-    private static final String PATH_COURSE = "courses";
-    private static final String PATH_PLAYER = "player";
+    private static final String PATH_COURSES = "courses";
+    private static final String PATH_PLAYERS = "players";
     private static final String PATH_HOLES = "holes";
     private static final String PATH_TEES = "tees";
 
     public static final String[] TOP_LEVEL_PATHS = {
-            PATH_COURSE,
-            PATH_PLAYER,
+            PATH_COURSES,
+            PATH_PLAYERS,
             PATH_HOLES,
             PATH_TEES
     };
 
     public static class Course implements CourseColumns, BaseColumns {
 
-        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_COURSE).build();
-        public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.golf.course";
-        public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/vnd.golf.course";
+        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_COURSES).build();
+        public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.golf.courses";
+        public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/vnd.golf.courses";
 
         /** Default "ORDER BY" clause. */
         public static final String DEFAULT_SORT = CourseColumns.COURSE_NAME + " COLLATE NOCASE ASC";
@@ -102,8 +99,8 @@ public class sqlcontractGolf {
     public static class Tees implements TeesColumns, BaseColumns {
 
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_TEES).build();
-        public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.golf.course";
-        public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/vnd.golf.course";
+        public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.golf.tees";
+        public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/vnd.golf.tees";
 
         /** Default "ORDER BY" clause. */
         public static final String DEFAULT_SORT = TeesColumns.TEE_COLOUR+ " COLLATE NOCASE ASC";
@@ -123,8 +120,8 @@ public class sqlcontractGolf {
     public static class Holes implements HolesColumns, BaseColumns {
 
         public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_HOLES).build();
-        public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.golf.course";
-        public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/vnd.golf.course";
+        public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.golf.holes";
+        public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/vnd.golf.holes";
 
         /** Default "ORDER BY" clause. */
         public static final String DEFAULT_SORT = HolesColumns.HOLE_NUMBER + " COLLATE NOCASE ASC";
@@ -142,7 +139,7 @@ public class sqlcontractGolf {
 
     public static class Player implements PlayerColumns, BaseColumns {
 
-        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_PLAYER).build();
+        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_PLAYERS).build();
         public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.golf.player";
         public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/vnd.golf.player";
 

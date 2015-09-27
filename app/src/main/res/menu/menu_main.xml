@@ -7,12 +7,18 @@
           android:orderInCategory="100"
           app:showAsAction="never"/>
 
+    <item android:id="@+id/manage_players"
+          android:title="@string/managePlayers"
+          android:orderInCategory="150"
+          app:showAsAction="never"
+          android:icon="@drawable/golfcourse"
+        />
+
     <item android:id="@+id/manage_courses"
           android:title="@string/manageCourses"
           android:orderInCategory="200"
           app:showAsAction="never"
           android:icon="@drawable/golfcourse"
         />
-
 
 </menu>

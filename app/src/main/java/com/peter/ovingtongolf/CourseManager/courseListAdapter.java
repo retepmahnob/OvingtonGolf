@@ -34,7 +34,7 @@ public class courseListAdapter extends RecyclerView.Adapter<courseListAdapter.co
     public courseListAdapter(Context context, Callbacks c) {
 
         databaseContext = context.getContentResolver();
-        highLight = context.getResources().getColor(R.color.barColor);
+        highLight = context.getResources().getColor(R.color.icons);
         mCallbacks = c;
         inflater= LayoutInflater.from(context);
     }

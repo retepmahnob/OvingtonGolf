@@ -19,14 +19,20 @@
         <activity
             android:name=".CourseManager.manageCourses"
             android:label="@string/title_activity_manage_courses" >
-
-            <meta-data android:name="android.support.PARENT_ACTIVITY" android:value=".MainActivity"/>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
         </activity>
+
         <provider
-            android:name="com.peter.ovingtongolf.databaseProvider.golfContentProvider"
+            android:name=".databaseProvider.golfContentProvider"
             android:authorities="com.peter.ovingtongolf.databaseProvider.golfContentProvider" >
         </provider>
 
+        <activity
+            android:name=".PlayerManager.managePlayers"
+            android:label="@string/title_activity_manage_players" >
+        </activity>
     </application>
 
 </manifest>

@@ -10,6 +10,13 @@
         android:id="@+id/app_bar"
         layout="@layout/app_bar"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/app_bar"
+        android:textSize="80dp"
+        android:text="@string/hello_world"/>
+
     <android.support.v4.widget.DrawerLayout
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/drawer_layout"

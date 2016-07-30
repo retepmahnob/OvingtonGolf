@@ -94,7 +94,7 @@ public class frag_list_course_holes extends Fragment implements LoaderManager.Lo
 
     public void SetCurrentCourseId (String courseId){
         currentCourseId = courseId;
-        getLoaderManager().restartLoader(URL_HOLE_LOADER, null, this);
+        getLoaderManager().restartLoader(URL_TEE_LOADER, null, this);
     }
 
     @Override
